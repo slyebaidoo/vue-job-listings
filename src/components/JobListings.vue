@@ -1,8 +1,8 @@
 <script setup>
 import { RouterLink } from "vue-router";
 import JobListing from "./JobListing.vue";
-import jobData from "@/jobs.json";
-import { ref, defineProps } from "vue";
+import { ref, defineProps, onMounted } from "vue";
+import axios from "axios";
 
 defineProps({
   limit: Number,
@@ -12,8 +12,16 @@ defineProps({
   },
 });
 
-const jobs = ref(jobData);
-console.log(jobs.value);
+const jobs = ref([]);
+
+onMounted(async () => {
+  try {
+    const response = await axios.get("http://localhost:8000/jobs");
+    jobs.value = response.data;
+  } catch (error) {
+    console.error("Error fetching jobs", error);
+  }
+});
 </script>
 
 <template>
@@ -26,8 +34,7 @@ console.log(jobs.value);
         <JobListing
           v-for="job in jobs.slice(0, limit || jobs.length)"
           :key="job.id"
-          :job="job"
-        />
+          :job="job" />
       </div>
     </div>
   </section>

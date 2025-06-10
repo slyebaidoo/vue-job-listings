@@ -97,48 +97,6 @@
         "contactEmail": "lilemoset@mailinator.com",
         "contactPhone": "+1 (733) 534-2219"
       }
-    },
-    {
-      "id": "508a",
-      "title": "Test",
-      "type": "Part-Time",
-      "lcoation": "Heilbronn",
-      "description": "Molestias deserunt i",
-      "salary": "$60K - $70K",
-      "company": {
-        "name": "Kinney and Nunez Inc",
-        "description": "Nemo eligendi incidu",
-        "contactEmail": "tusivuv@mailinator.com",
-        "contactPhone": "+1 (414) 807-1393"
-      }
-    },
-    {
-      "id": "0f16",
-      "title": "Test 2",
-      "type": "Full-Time",
-      "location": "Heilbronn",
-      "description": "Vel ut alias velit d",
-      "salary": "Under $50K",
-      "company": {
-        "name": "King and Glass Inc",
-        "description": "Consequatur Assumen",
-        "contactEmail": "hat@mailinator.com",
-        "contactPhone": "+1 (309) 309-7533"
-      }
-    },
-    {
-      "id": "251d",
-      "title": "Test - Toast",
-      "type": "Full-Time",
-      "location": "Soluta tempora aute ",
-      "description": "Reprehenderit omnis",
-      "salary": "$60K - $70K",
-      "company": {
-        "name": "Turner Sims Trading",
-        "description": "Rerum labore dolorum",
-        "contactEmail": "zateceqi@mailinator.com",
-        "contactPhone": "+1 (602) 564-3846"
-      }
     }
   ]
 }

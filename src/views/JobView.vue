@@ -5,6 +5,7 @@ import { reactive, onMounted } from "vue";
 import { useRoute, RouterLink, useRouter } from "vue-router";
 import { useToast } from "vue-toastification";
 import axios from "axios";
+import API_BASE_URL from "@/api";
 
 const route = useRoute();
 const router = useRouter();
@@ -21,8 +22,8 @@ const deleteJob = async () => {
   try {
     const confirm = window.confirm("Are you sure you want to delete this job");
     if (confirm) {
-      await axios.delete(`/api/jobs/${jobId}`);
-      toast.success("Job Deleted Succesfully");
+      await axios.delete(`${API_BASE_URL}/jobs/${jobId}`);
+      toast.success("Job Delete Request Sent (Note: External API is read-only)");
       router.push("/jobs");
     }
   } catch (error) {
@@ -33,7 +34,7 @@ const deleteJob = async () => {
 
 onMounted(async () => {
   try {
-    const response = await axios.get(`/api/jobs/${jobId}`);
+    const response = await axios.get(`${API_BASE_URL}/jobs/${jobId}`);
     state.job = response.data;
   } catch (error) {
     console.error("Error fetching job", error);
@@ -81,10 +82,10 @@ onMounted(async () => {
           <div class="rounded-lg bg-white p-6 shadow-md">
             <h3 class="mb-6 text-xl font-bold">Company Info</h3>
 
-            <h2 class="text-2xl">{{ state.job.company.name }}</h2>
+            <h2 class="text-2xl">{{ state.job.company?.name }}</h2>
 
             <p class="my-2">
-              {{ state.job.company.description }}
+              {{ state.job.company?.description }}
             </p>
 
             <hr class="my-4" />
@@ -92,13 +93,13 @@ onMounted(async () => {
             <h3 class="text-xl">Contact Email</h3>
 
             <p class="my-2 bg-green-100 p-2 font-bold">
-              {{ state.job.company.contactEmail }}
+              {{ state.job.company?.contactEmail }}
             </p>
 
             <h3 class="text-xl">Contact Phone:</h3>
 
             <p class="my-2 bg-green-100 p-2 font-bold">
-              {{ state.job.company.contactPhone }}
+              {{ state.job.company?.contactPhone }}
             </p>
           </div>
 

@@ -94,5 +94,21 @@
     },
     "createdAt": "2024-01-06T00:00:00.000Z",
     "updatedAt": "2024-01-06T00:00:00.000Z"
+  },
+  {
+    "id": "08472946-8fa8-48dc-a314-597408ba4d90",
+    "title": "UI/Ux",
+    "type": "Full-Time",
+    "location": "Baltimore",
+    "description": "lkansfgwoiqwn",
+    "salary": "Over $200K",
+    "company": {
+      "name": "Next Tec",
+      "description": ";alsknwge",
+      "contactEmail": "werrw@gmai.com",
+      "contactPhone": "2345677654"
+    },
+    "createdAt": "2025-06-13T23:00:01.148Z",
+    "updatedAt": "2025-06-13T23:00:01.148Z"
   }
 ]

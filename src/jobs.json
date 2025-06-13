@@ -1,18 +1,18 @@
 {
   "jobs": [
     {
-      "id": "1",
-      "title": "Senior Vue Developer",
+      "title": "Senior Vue Dev",
       "type": "Full-Time",
-      "description": "We are seeking a talented Front-End Developer to join our team in Boston, MA. The ideal candidate will have strong skills in HTML, CSS, and JavaScript, with experience working with modern JavaScript frameworks such as Vue or Angular.",
       "location": "Boston, MA",
-      "salary": "$70K - $80K",
+      "description": "We are seeking a talented Front-End Developer to join our team in Boston, MA. The ideal candidate will have strong skills in HTML, CSS, and JavaScript, with experience working with modern JavaScript frameworks such as Vue or Angular.",
+      "salary": "$125K - $150K",
       "company": {
         "name": "NewTek Solutions",
         "description": "NewTek Solutions is a leading technology company specializing in web development and digital solutions. We pride ourselves on delivering high-quality products and services to our clients while fostering a collaborative and innovative work environment.",
         "contactEmail": "contact@teksolutions.com",
         "contactPhone": "555-555-5555"
-      }
+      },
+      "id": "1"
     },
     {
       "id": "2",
@@ -85,15 +85,15 @@
       }
     },
     {
-      "id": "f9c2",
-      "title": "Daryl Trevino",
-      "type": "Part-Time",
-      "lcoation": "Quis vel modi conseq",
+      "id": "8c56",
+      "title": "UI/UX Engineer",
+      "type": "Full-Time",
+      "location": "Bietigheim-Bissingen",
       "description": "Repellendus Fugiat",
       "salary": "Under $50K",
       "company": {
         "name": "Buckley Rodriquez Plc",
-        "description": "Dolorum et duis cupi",
+        "description": "Lorem ipsum dit solor mit ",
         "contactEmail": "lilemoset@mailinator.com",
         "contactPhone": "+1 (733) 534-2219"
       }

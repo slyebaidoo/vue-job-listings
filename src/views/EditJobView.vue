@@ -5,9 +5,10 @@ import { useRoute } from "vue-router";
 import { useToast } from "vue-toastification";
 import axios from "axios";
 import API_BASE_URL from "@/api";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 const route = useRoute();
-
+const toast = useToast();
 const jobId = route.params.id;
 
 const form = reactive({
@@ -29,8 +30,6 @@ const state = reactive({
   isLoading: true,
 });
 
-const toast = useToast();
-
 const handleSubmit = async () => {
   const updatedJob = {
     title: form.title,
@@ -47,12 +46,12 @@ const handleSubmit = async () => {
   };
 
   try {
-    const response = await axios.put(`${API_BASE_URL}/jobs/${jobId}`, updatedJob);
-    toast.success("Job Update Request Sent (Note: External API is read-only - changes won't persist)");
+    await axios.put(`${API_BASE_URL}/jobs/${jobId}`, updatedJob);
+    toast.success("Job updated successfully!");
     router.push(`/jobs/${jobId}`);
   } catch (error) {
-    console.error("Error updating job", error);
-    toast.error("Job Was Not Updated");
+    console.error("Error updating job:", error);
+    toast.error("Failed to update job. Please try again.");
   }
 };
 
@@ -60,7 +59,8 @@ onMounted(async () => {
   try {
     const response = await axios.get(`${API_BASE_URL}/jobs/${jobId}`);
     state.job = response.data;
-    // Populate inputs
+    
+    // Populate form fields
     form.type = state.job.type;
     form.title = state.job.title;
     form.description = state.job.description;
@@ -71,7 +71,8 @@ onMounted(async () => {
     form.company.contactEmail = state.job.company?.contactEmail || '';
     form.company.contactPhone = state.job.company?.contactPhone || '';
   } catch (error) {
-    console.error("Error fetching job", error);
+    console.error("Error fetching job:", error);
+    toast.error("Failed to load job data");
   } finally {
     state.isLoading = false;
   }
@@ -81,7 +82,11 @@ onMounted(async () => {
 <template>
   <section class="bg-green-50">
     <div class="container m-auto max-w-2xl py-24">
-      <div
+      <div v-if="state.isLoading" class="py-6 text-center text-gray-500">
+        <PulseLoader />
+      </div>
+      
+      <div v-else
         class="m-4 mb-4 rounded-md border bg-white px-6 py-8 shadow-md md:m-0">
         <form @submit.prevent="handleSubmit">
           <h2 class="mb-6 text-center text-3xl font-semibold">Edit Job</h2>
@@ -113,9 +118,10 @@ onMounted(async () => {
               id="name"
               name="name"
               class="mb-2 w-full rounded border px-3 py-2"
-              placeholder="eg. Beautiful Apartment In Miami"
+              placeholder="eg. Senior Vue Developer"
               required />
           </div>
+          
           <div class="mb-4">
             <label for="description" class="mb-2 block font-bold text-gray-700"
               >Description</label
@@ -126,11 +132,12 @@ onMounted(async () => {
               name="description"
               class="w-full rounded border px-3 py-2"
               rows="4"
-              placeholder="Add any job duties, expectations, requirements, etc"></textarea>
+              placeholder="Add any job duties, expectations, requirements, etc"
+              required></textarea>
           </div>
 
           <div class="mb-4">
-            <label for="type" class="mb-2 block font-bold text-gray-700"
+            <label for="salary" class="mb-2 block font-bold text-gray-700"
               >Salary</label
             >
             <select
@@ -139,16 +146,16 @@ onMounted(async () => {
               name="salary"
               class="w-full rounded border px-3 py-2"
               required>
-              <option value="Under $50K">under $50K</option>
-              <option value="$50K - $60K">$50 - $60K</option>
-              <option value="$60K - $70K">$60 - $70K</option>
-              <option value="$70K - $80K">$70 - $80K</option>
-              <option value="$80K - $90K">$80 - $90K</option>
-              <option value="$90K - $100K">$90 - $100K</option>
-              <option value="$100K - $125K">$100 - $125K</option>
-              <option value="$125K - $150K">$125 - $150K</option>
-              <option value="$150K - $175K">$150 - $175K</option>
-              <option value="$175K - $200K">$175 - $200K</option>
+              <option value="Under $50K">Under $50K</option>
+              <option value="$50K - $60K">$50K - $60K</option>
+              <option value="$60K - $70K">$60K - $70K</option>
+              <option value="$70K - $80K">$70K - $80K</option>
+              <option value="$80K - $90K">$80K - $90K</option>
+              <option value="$90K - $100K">$90K - $100K</option>
+              <option value="$100K - $125K">$100K - $125K</option>
+              <option value="$125K - $150K">$125K - $150K</option>
+              <option value="$150K - $175K">$150K - $175K</option>
+              <option value="$175K - $200K">$175K - $200K</option>
               <option value="Over $200K">Over $200K</option>
             </select>
           </div>
@@ -177,7 +184,8 @@ onMounted(async () => {
               id="company"
               name="company"
               class="w-full rounded border px-3 py-2"
-              placeholder="Company Name" />
+              placeholder="Company Name"
+              required />
           </div>
 
           <div class="mb-4">
@@ -192,7 +200,8 @@ onMounted(async () => {
               name="company_description"
               class="w-full rounded border px-3 py-2"
               rows="4"
-              placeholder="What does your company do?"></textarea>
+              placeholder="What does your company do?"
+              required></textarea>
           </div>
 
           <div class="mb-4">
@@ -210,6 +219,7 @@ onMounted(async () => {
               placeholder="Email address for applicants"
               required />
           </div>
+          
           <div class="mb-4">
             <label
               for="contact_phone"

@@ -20,15 +20,15 @@ const state = reactive({
 
 const deleteJob = async () => {
   try {
-    const confirm = window.confirm("Are you sure you want to delete this job");
-    if (confirm) {
+    const confirmed = window.confirm("Are you sure you want to delete this job?");
+    if (confirmed) {
       await axios.delete(`${API_BASE_URL}/jobs/${jobId}`);
-      toast.success("Job Delete Request Sent (Note: External API is read-only)");
+      toast.success("Job deleted successfully!");
       router.push("/jobs");
     }
   } catch (error) {
-    console.error("Error deleting job", error);
-    toast.error("Job Not Deleted");
+    console.error("Error deleting job:", error);
+    toast.error("Failed to delete job. Please try again.");
   }
 };
 
@@ -37,7 +37,8 @@ onMounted(async () => {
     const response = await axios.get(`${API_BASE_URL}/jobs/${jobId}`);
     state.job = response.data;
   } catch (error) {
-    console.error("Error fetching job", error);
+    console.error("Error fetching job:", error);
+    toast.error("Failed to load job data");
   } finally {
     state.isLoading = false;
   }
@@ -96,7 +97,7 @@ onMounted(async () => {
               {{ state.job.company?.contactEmail }}
             </p>
 
-            <h3 class="text-xl">Contact Phone:</h3>
+            <h3 class="text-xl">Contact Phone</h3>
 
             <p class="my-2 bg-green-100 p-2 font-bold">
               {{ state.job.company?.contactPhone }}

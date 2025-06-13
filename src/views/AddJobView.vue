@@ -6,7 +6,7 @@ import { useToast } from "vue-toastification";
 import API_BASE_URL from "@/api";
 
 const form = reactive({
-  type: "Part-Time",
+  type: "Full-Time",
   title: "",
   description: "",
   salary: "",
@@ -18,6 +18,8 @@ const form = reactive({
     contactPhone: "",
   },
 });
+
+const toast = useToast();
 
 const handleSubmit = async () => {
   const newJob = {
@@ -34,15 +36,13 @@ const handleSubmit = async () => {
     },
   };
 
-  const toast = useToast();
-
   try {
     const response = await axios.post(`${API_BASE_URL}/jobs`, newJob);
-    toast.success("Job Add Request Sent (Note: External API is read-only - changes won't persist)");
-    router.push(`/jobs`);
+    toast.success("Job added successfully!");
+    router.push(`/jobs/${response.data.id}`);
   } catch (error) {
-    console.error("Error posting job", error);
-    toast.error("Job Was Not Added");
+    console.error("Error adding job:", error);
+    toast.error("Failed to add job. Please try again.");
   }
 };
 </script>
@@ -82,7 +82,7 @@ const handleSubmit = async () => {
               id="name"
               name="name"
               class="mb-2 w-full rounded border px-3 py-2"
-              placeholder="eg. Beautiful Apartment In Miami"
+              placeholder="eg. Senior Vue Developer"
               required />
           </div>
           <div class="mb-4">
@@ -95,11 +95,12 @@ const handleSubmit = async () => {
               name="description"
               class="w-full rounded border px-3 py-2"
               rows="4"
-              placeholder="Add any job duties, expectations, requirements, etc"></textarea>
+              placeholder="Add any job duties, expectations, requirements, etc"
+              required></textarea>
           </div>
 
           <div class="mb-4">
-            <label for="type" class="mb-2 block font-bold text-gray-700"
+            <label for="salary" class="mb-2 block font-bold text-gray-700"
               >Salary</label
             >
             <select
@@ -108,16 +109,16 @@ const handleSubmit = async () => {
               name="salary"
               class="w-full rounded border px-3 py-2"
               required>
-              <option value="Under $50K">under $50K</option>
-              <option value="$50K - $60K">$50 - $60K</option>
-              <option value="$60K - $70K">$60 - $70K</option>
-              <option value="$70K - $80K">$70 - $80K</option>
-              <option value="$80K - $90K">$80 - $90K</option>
-              <option value="$90K - $100K">$90 - $100K</option>
-              <option value="$100K - $125K">$100 - $125K</option>
-              <option value="$125K - $150K">$125 - $150K</option>
-              <option value="$150K - $175K">$150 - $175K</option>
-              <option value="$175K - $200K">$175 - $200K</option>
+              <option value="Under $50K">Under $50K</option>
+              <option value="$50K - $60K">$50K - $60K</option>
+              <option value="$60K - $70K">$60K - $70K</option>
+              <option value="$70K - $80K">$70K - $80K</option>
+              <option value="$80K - $90K">$80K - $90K</option>
+              <option value="$90K - $100K">$90K - $100K</option>
+              <option value="$100K - $125K">$100K - $125K</option>
+              <option value="$125K - $150K">$125K - $150K</option>
+              <option value="$150K - $175K">$150K - $175K</option>
+              <option value="$175K - $200K">$175K - $200K</option>
               <option value="Over $200K">Over $200K</option>
             </select>
           </div>
@@ -146,7 +147,8 @@ const handleSubmit = async () => {
               id="company"
               name="company"
               class="w-full rounded border px-3 py-2"
-              placeholder="Company Name" />
+              placeholder="Company Name"
+              required />
           </div>
 
           <div class="mb-4">
@@ -161,7 +163,8 @@ const handleSubmit = async () => {
               name="company_description"
               class="w-full rounded border px-3 py-2"
               rows="4"
-              placeholder="What does your company do?"></textarea>
+              placeholder="What does your company do?"
+              required></textarea>
           </div>
 
           <div class="mb-4">

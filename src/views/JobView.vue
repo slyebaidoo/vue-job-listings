@@ -23,7 +23,14 @@ const deleteJob = async () => {
     const confirmed = window.confirm("Are you sure you want to delete this job?");
     if (confirmed) {
       await axios.delete(`${API_BASE_URL}/jobs/${jobId}`);
-      toast.success("Job deleted successfully!");
+      
+      // Check if we're in production (using external API)
+      if (import.meta.env.PROD) {
+        toast.success("Job Delete Request Sent (Note: External API is read-only)");
+      } else {
+        toast.success("Job deleted successfully!");
+      }
+      
       router.push("/jobs");
     }
   } catch (error) {

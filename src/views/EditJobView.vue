@@ -47,7 +47,14 @@ const handleSubmit = async () => {
 
   try {
     await axios.put(`${API_BASE_URL}/jobs/${jobId}`, updatedJob);
-    toast.success("Job updated successfully!");
+    
+    // Check if we're in production (using external API)
+    if (import.meta.env.PROD) {
+      toast.success("Job Update Request Sent (Note: External API is read-only - changes won't persist)");
+    } else {
+      toast.success("Job updated successfully!");
+    }
+    
     router.push(`/jobs/${jobId}`);
   } catch (error) {
     console.error("Error updating job:", error);

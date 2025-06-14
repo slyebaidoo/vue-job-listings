@@ -38,8 +38,20 @@ const handleSubmit = async () => {
 
   try {
     const response = await axios.post(`${API_BASE_URL}/jobs`, newJob);
-    toast.success("Job added successfully!");
-    router.push(`/jobs/${response.data.id}`);
+    
+    // Check if we're in production (using external API)
+    if (import.meta.env.PROD) {
+      toast.success("Job Add Request Sent (Note: External API is read-only - changes won't persist)");
+    } else {
+      toast.success("Job added successfully!");
+    }
+    
+    // Handle response differently based on API
+    if (response.data && response.data.id) {
+      router.push(`/jobs/${response.data.id}`);
+    } else {
+      router.push('/jobs');
+    }
   } catch (error) {
     console.error("Error adding job:", error);
     toast.error("Failed to add job. Please try again.");
@@ -85,6 +97,7 @@ const handleSubmit = async () => {
               placeholder="eg. Senior Vue Developer"
               required />
           </div>
+          
           <div class="mb-4">
             <label for="description" class="mb-2 block font-bold text-gray-700"
               >Description</label
@@ -182,6 +195,7 @@ const handleSubmit = async () => {
               placeholder="Email address for applicants"
               required />
           </div>
+          
           <div class="mb-4">
             <label
               for="contact_phone"
